@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
-import androidx.appcompat.widget.SwitchCompat
 
 class SignInActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var SigninBTN : Button
     private lateinit var SignInSignUpBTN : Button
     private lateinit var SignInForgotPasswordBTN : Button
-    private lateinit var SignInStayInSwitch : SwitchCompat
+    private lateinit var SignInRememberMeCheckBox : CheckBox
 
 
 
@@ -60,7 +60,7 @@ class SignInActivity : AppCompatActivity() {
         SigninBTN = findViewById(R.id.SigninBTN)
         SignInSignUpBTN = findViewById(R.id.SignInSignUpBTN)
         SignInForgotPasswordBTN = findViewById(R.id.SignInForgotPasswordBTN)
-        SignInStayInSwitch = findViewById(R.id.SignInStayInSwitch)
+        SignInRememberMeCheckBox = findViewById(R.id.SignInRememberMeCheckBox)
 
 
     }

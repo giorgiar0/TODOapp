@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TODOapp</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="StayIn">Stay Signed in</string>
+    <string name="email">Enter your email address</string>
+    <string name="password">Enter your password</string>
+    <string name="rememberMe">Remember Me</string>
 
     <string name="signIn">Sign In</string>
     <string name="createNewAccount">Create New Account</string>
@@ -11,6 +11,8 @@
     <string name="confirmPassword">Confirm Password</string>
     <string name="signUp">Sign Up</string>
     <string name="AlreadyHaveAnAccount">Already have an account?</string>
+    <string name="agree">I agree to privacy policy &amp; terms</string>
+
 
     <string name="resetPass">Reset Password</string>
 

@@ -13,7 +13,7 @@
     <EditText
 
         android:id="@+id/SignInEmailET"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
         android:inputType="textEmailAddress"
@@ -23,29 +23,43 @@
     <EditText
 
         android:id="@+id/SignInPasswordET"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
         android:inputType="textPassword"
         android:hint="@string/password"/>
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/SignInStayInSwitch"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/StayIn"
-        android:textSize="16sp"
-        app:switchPadding="10dp"
-        android:textColor="#80000000"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/SignInRememberMeCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rememberMe"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:theme="@style/coloredCheckbox"/>
+
+    </LinearLayout>
+
+
+
+
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/SigninBTN"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="100dp"
         android:background="@drawable/button_bg_1"
         android:text="@string/signIn"
@@ -53,9 +67,12 @@
         android:textColor="@color/white"/>
 
 
+
+
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/SignInSignUpBTN"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="100dp"
@@ -68,7 +85,7 @@
     <androidx.appcompat.widget.AppCompatButton
 
         android:id="@+id/SignInForgotPasswordBTN"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="100dp"
@@ -76,6 +93,7 @@
         android:text="@string/forgotPassword"
         android:textSize="16sp"
         android:textColor="@color/sangu_color"/>
+
 
 
 </LinearLayout>

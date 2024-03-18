@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 
 class SignUpActivity : AppCompatActivity() {
@@ -13,6 +14,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var SignUpRepeatPasswordET : EditText
     private lateinit var SignUpBTN : Button
     private lateinit var SignUpAlreadyHaveAnAccountBTN : Button
+    private lateinit var SignUpAgreeCheckBox : CheckBox
 
 
 
@@ -51,6 +53,7 @@ class SignUpActivity : AppCompatActivity() {
         SignUpRepeatPasswordET = findViewById(R.id.SignUpRepeatPasswordET)
         SignUpBTN = findViewById(R.id.SignUpBTN)
         SignUpAlreadyHaveAnAccountBTN = findViewById(R.id.SignUpAlreadyHaveAnAccountBTN)
+        SignUpAgreeCheckBox = findViewById(R.id.SignUpAgreeCheckBox)
 
 
 
