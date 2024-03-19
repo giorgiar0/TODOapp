@@ -9,14 +9,12 @@ import android.widget.EditText
 
 class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var SignUpEmailEt : EditText
-    private lateinit var SignUpPasswordET : EditText
-    private lateinit var SignUpRepeatPasswordET : EditText
-    private lateinit var SignUpBTN : Button
-    private lateinit var SignUpAlreadyHaveAnAccountBTN : Button
-    private lateinit var SignUpAgreeCheckBox : CheckBox
-
-
+    private lateinit var SignUpEmailEt: EditText
+    private lateinit var SignUpPasswordET: EditText
+    private lateinit var SignUpRepeatPasswordET: EditText
+    private lateinit var SignUpBTN: Button
+    private lateinit var SignUpAlreadyHaveAnAccountBTN: Button
+    private lateinit var SignUpAgreeCheckBox: CheckBox
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +25,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
-
-    private fun listeners(){
+    private fun listeners() {
 
 
         SignUpBTN.setOnClickListener {
@@ -40,13 +37,10 @@ class SignUpActivity : AppCompatActivity() {
         }
 
 
-
-
-
     }
 
 
-    private fun init(){
+    private fun init() {
 
         SignUpEmailEt = findViewById(R.id.SignUpEmailET)
         SignUpPasswordET = findViewById(R.id.SignUpPasswordET)
@@ -56,21 +50,7 @@ class SignUpActivity : AppCompatActivity() {
         SignUpAgreeCheckBox = findViewById(R.id.SignUpAgreeCheckBox)
 
 
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

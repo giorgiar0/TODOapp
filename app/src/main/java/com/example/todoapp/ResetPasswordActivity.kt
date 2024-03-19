@@ -8,10 +8,8 @@ import android.widget.EditText
 
 class ResetPasswordActivity : AppCompatActivity() {
 
-    private lateinit var ResetPassEmailET : EditText
-    private lateinit var ResetPassBTN : Button
-
-
+    private lateinit var ResetPassEmailET: EditText
+    private lateinit var ResetPassBTN: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +21,7 @@ class ResetPasswordActivity : AppCompatActivity() {
     }
 
 
-
-    private fun listeners(){
+    private fun listeners() {
 
 
         ResetPassBTN.setOnClickListener {
@@ -32,24 +29,16 @@ class ResetPasswordActivity : AppCompatActivity() {
         }
 
 
-
-
-
-
     }
 
 
-
-    private fun init(){
+    private fun init() {
 
         ResetPassEmailET = findViewById(R.id.ResetPassEmailET)
         ResetPassBTN = findViewById(R.id.ResetPassBTN)
 
 
-
-
     }
-
 
 
 }

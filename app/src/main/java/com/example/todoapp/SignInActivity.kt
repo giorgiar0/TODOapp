@@ -9,14 +9,12 @@ import android.widget.EditText
 
 class SignInActivity : AppCompatActivity() {
 
-    private lateinit var SignInEmailET : EditText
-    private lateinit var SignInPasswordET : EditText
-    private lateinit var SigninBTN : Button
-    private lateinit var SignInSignUpBTN : Button
-    private lateinit var SignInForgotPasswordBTN : Button
-    private lateinit var SignInRememberMeCheckBox : CheckBox
-
-
+    private lateinit var SignInEmailET: EditText
+    private lateinit var SignInPasswordET: EditText
+    private lateinit var SigninBTN: Button
+    private lateinit var SignInSignUpBTN: Button
+    private lateinit var SignInForgotPasswordBTN: Button
+    private lateinit var SignInRememberMeCheckBox: CheckBox
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +27,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
 
-
-    private fun listeners(){
+    private fun listeners() {
 
 
         SigninBTN.setOnClickListener {
@@ -48,13 +45,10 @@ class SignInActivity : AppCompatActivity() {
         }
 
 
-
-
     }
 
 
-
-    private fun init(){
+    private fun init() {
         SignInEmailET = findViewById(R.id.SignInEmailET)
         SignInPasswordET = findViewById(R.id.SignInPasswordET)
         SigninBTN = findViewById(R.id.SigninBTN)
@@ -64,7 +58,6 @@ class SignInActivity : AppCompatActivity() {
 
 
     }
-
 
 
 }
