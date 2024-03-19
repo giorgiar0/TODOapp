@@ -16,6 +16,7 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
         android:hint="@string/email"
+        android:importantForAutofill="no"
         android:inputType="textEmailAddress" />
 
 
@@ -26,6 +27,7 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
         android:hint="@string/password"
+        android:importantForAutofill="no"
         android:inputType="textPassword" />
 
     <EditText
@@ -35,6 +37,7 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
         android:hint="@string/confirmPassword"
+        android:importantForAutofill="no"
         android:inputType="textPassword" />
 
 
