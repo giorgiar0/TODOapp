@@ -18,6 +18,10 @@
 
     <string name="resetText">To reset your password, please enter your email where you will receive password reset link</string>
 
+    <string name="homePage">Home Page</string>
+
+    <string name="SignOut">Sign Out</string>
+
 
 
 </resources>

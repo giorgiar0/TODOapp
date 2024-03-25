@@ -9,12 +9,12 @@ import android.widget.EditText
 
 class SignInActivity : AppCompatActivity() {
 
-    private lateinit var SignInEmailET: EditText
-    private lateinit var SignInPasswordET: EditText
-    private lateinit var SigninBTN: Button
-    private lateinit var SignInSignUpBTN: Button
-    private lateinit var SignInForgotPasswordBTN: Button
-    private lateinit var SignInRememberMeCheckBox: CheckBox
+    private lateinit var signInEmailET: EditText
+    private lateinit var signInPasswordET: EditText
+    private lateinit var signinBTN: Button
+    private lateinit var signInSignUpBTN: Button
+    private lateinit var signInForgotPasswordBTN: Button
+    private lateinit var signInRememberMeCheckBox: CheckBox
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,17 +30,29 @@ class SignInActivity : AppCompatActivity() {
     private fun listeners() {
 
 
-        SigninBTN.setOnClickListener {
-            startActivity(Intent(this, SignInActivity::class.java))
+        signinBTN.setOnClickListener {
+
+            val email =signInEmailET.text.toString()
+            val password = signInPasswordET.text.toString()
+
+
+            if (email.isEmpty() || password.isEmpty() ) return@setOnClickListener
+
+
+
+
+
+
+            startActivity(Intent(this, HomeActivity::class.java))
         }
 
 
-        SignInSignUpBTN.setOnClickListener {
+        signInSignUpBTN.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
 
-        SignInForgotPasswordBTN.setOnClickListener {
+        signInForgotPasswordBTN.setOnClickListener {
             startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
 
@@ -49,12 +61,12 @@ class SignInActivity : AppCompatActivity() {
 
 
     private fun init() {
-        SignInEmailET = findViewById(R.id.SignInEmailET)
-        SignInPasswordET = findViewById(R.id.SignInPasswordET)
-        SigninBTN = findViewById(R.id.SigninBTN)
-        SignInSignUpBTN = findViewById(R.id.SignInSignUpBTN)
-        SignInForgotPasswordBTN = findViewById(R.id.SignInForgotPasswordBTN)
-        SignInRememberMeCheckBox = findViewById(R.id.SignInRememberMeCheckBox)
+        signInEmailET = findViewById(R.id.signInEmailET)
+        signInPasswordET = findViewById(R.id.signInPasswordET)
+        signinBTN = findViewById(R.id.signinBTN)
+        signInSignUpBTN = findViewById(R.id.signInSignUpBTN)
+        signInForgotPasswordBTN = findViewById(R.id.signInForgotPasswordBTN)
+        signInRememberMeCheckBox = findViewById(R.id.signInRememberMeCheckBox)
 
 
     }

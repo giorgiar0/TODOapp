@@ -11,7 +11,7 @@
 
     <EditText
 
-        android:id="@+id/SignInEmailET"
+        android:id="@+id/signInEmailET"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
@@ -22,7 +22,7 @@
 
     <EditText
 
-        android:id="@+id/SignInPasswordET"
+        android:id="@+id/signInPasswordET"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"
@@ -40,7 +40,7 @@
 
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/SignInRememberMeCheckBox"
+            android:id="@+id/signInRememberMeCheckBox"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -52,7 +52,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/SigninBTN"
+        android:id="@+id/signinBTN"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
@@ -64,7 +64,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/SignInSignUpBTN"
+        android:id="@+id/signInSignUpBTN"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
@@ -77,7 +77,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
 
-        android:id="@+id/SignInForgotPasswordBTN"
+        android:id="@+id/signInForgotPasswordBTN"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
