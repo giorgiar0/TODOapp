@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 
 class SignInActivity : AppCompatActivity() {
 
@@ -36,7 +37,11 @@ class SignInActivity : AppCompatActivity() {
             val password = signInPasswordET.text.toString()
 
 
-            if (email.isEmpty() || password.isEmpty() ) return@setOnClickListener
+            if (email.isEmpty() || password.isEmpty() ) {
+                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+
+                return@setOnClickListener
+            }
 
 
 
