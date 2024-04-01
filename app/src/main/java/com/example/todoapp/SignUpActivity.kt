@@ -10,19 +10,11 @@ import android.widget.EditText
 import android.widget.Toast
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
-import io.ktor.http.ContentType
-import org.json.JSONObject
-import java.lang.Exception
 import io.ktor.client.content.*
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.forms.FormDataContent
 import io.ktor.serialization.*
-import io.ktor.client.request.forms.submitForm
-import io.ktor.content.TextContent
-import io.ktor.http.Parameters
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.InternalAPI
-import kotlinx.serialization.serializer
 
 
 class SignUpActivity : AppCompatActivity() {
