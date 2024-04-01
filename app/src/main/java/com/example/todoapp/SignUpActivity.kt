@@ -3,10 +3,27 @@ package com.example.todoapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import io.ktor.client.HttpClient
+import io.ktor.client.request.post
+import io.ktor.http.ContentType
+import org.json.JSONObject
+import java.lang.Exception
+import io.ktor.client.content.*
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.serialization.*
+import io.ktor.client.request.forms.submitForm
+import io.ktor.content.TextContent
+import io.ktor.http.Parameters
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.util.InternalAPI
+import kotlinx.serialization.serializer
+
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -33,6 +50,45 @@ class SignUpActivity : AppCompatActivity() {
         return true
     }
 
+    private fun validateEmail(email: String):Boolean{
+        return email.contains("@")
+    }
+
+
+
+    @OptIn(InternalAPI::class)
+    private suspend fun registerUser(email: String, password: String) :Boolean {
+
+        val url = ""
+
+        val ktorClient = HttpClient{
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+
+        data class UserRegistrationData(val email: String, val password: String)
+
+
+        val response = ktorClient.post(url){
+
+            val hashedPassword = hashPassword
+            val requestBody = UserRegistrationData(email = email, password = password)
+            body = requestBody
+        }
+
+        if (response.status.value == 200) {
+            val responseData = response.content
+            val success = responseData.get("success") as Boolean
+            return success
+        } else {
+            Log.e("API", "Registration failed: ${response.status.value}")
+            return false
+        }
+    }
+
+
+
 
     private fun listeners() {
 
@@ -50,15 +106,31 @@ class SignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (!validatePassword(password)){
-                val errorMessage = "Password must be at least 6 characters and contain one lowercase, uppercase and digit."
-                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
-                return@setOnClickListener
+//            if (!validatePassword(password)){
+//                val errorMessage = "Password must be at least 6 characters and contain one lowercase, uppercase and digit."
+//                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+//                return@setOnClickListener
+//            }
+
+
+            if (validateEmail(email) && validatePassword(password)){
+                startActivity(Intent(this, SignInActivity::class.java))
+
+            } else{
+                if (!validateEmail(email)) {
+                    val errorMessage = "Provide a valid email"
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                } else if (!validatePassword(password)){
+                    val errorMessage = "Password must be at least 6 characters and contain one lowercase, uppercase and digit."
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+
             }
 
 
 
-            startActivity(Intent(this, SignInActivity::class.java))
         }
 
         signUpAlreadyHaveAnAccountBTN.setOnClickListener {

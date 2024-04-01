@@ -33,11 +33,11 @@ class SignInActivity : AppCompatActivity() {
 
         signinBTN.setOnClickListener {
 
-            val email =signInEmailET.text.toString()
+            val email = signInEmailET.text.toString()
             val password = signInPasswordET.text.toString()
 
 
-            if (email.isEmpty() || password.isEmpty() ) {
+            if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
 
                 return@setOnClickListener
