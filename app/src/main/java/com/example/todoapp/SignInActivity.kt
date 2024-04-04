@@ -7,6 +7,11 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import io.ktor.http.isSuccess
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 class SignInActivity : AppCompatActivity() {
 
@@ -17,6 +22,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var signInForgotPasswordBTN: Button
     private lateinit var signInRememberMeCheckBox: CheckBox
 
+    private lateinit var apiManager: KtorApiManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +30,7 @@ class SignInActivity : AppCompatActivity() {
         init()
         listeners()
 
+        apiManager = KtorApiManager(this)
 
     }
 
@@ -35,6 +42,7 @@ class SignInActivity : AppCompatActivity() {
 
             val email = signInEmailET.text.toString()
             val password = signInPasswordET.text.toString()
+            val rememberMe = signInRememberMeCheckBox.isChecked
 
 
             if (email.isEmpty() || password.isEmpty()) {
@@ -43,12 +51,28 @@ class SignInActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = try {
+                    apiManager.signIn(email, password, rememberMe)
+                } catch (e: Exception){
+                    runOnUiThread{
+                        Toast.makeText(this@SignInActivity, "Sign in failed!", Toast.LENGTH_SHORT).show()
+                    }
+                    return@launch
+                }
 
-
-
-
-
-            startActivity(Intent(this, HomeActivity::class.java))
+                if (response.status.isSuccess()){
+                    runOnUiThread{
+                        Toast.makeText(this@SignInActivity,"Sign in successful!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+                    }
+                } else{
+                    val errorMessage = response.status.value
+                    runOnUiThread{
+                        Toast.makeText(this@SignInActivity,errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
 
 

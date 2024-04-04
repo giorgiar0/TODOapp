@@ -1,20 +1,20 @@
 package com.example.todoapp
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.http.HttpException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-import io.ktor.client.HttpClient
-import io.ktor.client.request.post
-import io.ktor.client.content.*
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.*
-import io.ktor.serialization.kotlinx.json.json
-import io.ktor.util.InternalAPI
+import androidx.lifecycle.lifecycleScope
+import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -26,101 +26,95 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var signUpAlreadyHaveAnAccountBTN: Button
     private lateinit var signUpAgreeCheckBox: CheckBox
 
+    private lateinit var apiManager: KtorApiManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         init()
         listeners()
+
+        apiManager = KtorApiManager(this)
+
     }
 
     private fun validatePassword(password: String): Boolean {
-        if (password.length < 6 || !password.matches("[a-zA-Z0-9]+".toRegex()) || !password.contains(Regex("[a-z]")) || !password.contains(Regex("[A-Z]")) || !password.contains(Regex("[0-9]"))){
+        if (password.length < 6 || !password.matches("[a-zA-Z0-9]+".toRegex()) || !password.contains(
+                Regex("[a-z]")
+            ) || !password.contains(Regex("[A-Z]")) || !password.contains(Regex("[0-9]"))
+        ) {
             return false
         }
 
         return true
     }
 
-    private fun validateEmail(email: String):Boolean{
+    private fun validateEmail(email: String): Boolean {
         return email.contains("@")
     }
 
-
-
-    @OptIn(InternalAPI::class)
-    private suspend fun registerUser(email: String, password: String) :Boolean {
-
-        val url = ""
-
-        val ktorClient = HttpClient{
-            install(ContentNegotiation) {
-                json()
-            }
-        }
-
-        data class UserRegistrationData(val email: String, val password: String)
-
-
-        val response = ktorClient.post(url){
-
-            val hashedPassword = hashPassword
-            val requestBody = UserRegistrationData(email = email, password = password)
-            body = requestBody
-        }
-
-        if (response.status.value == 200) {
-            val responseData = response.content
-            val success = responseData.get("success") as Boolean
-            return success
-        } else {
-            Log.e("API", "Registration failed: ${response.status.value}")
-            return false
-        }
-    }
-
-
+    @Serializable
+    data class User(val email: String, val password: String, val confirmPassword: String)
 
 
     private fun listeners() {
 
-
         signUpBTN.setOnClickListener {
-
 
             val email = signUpEmailEt.text.toString()
             val password = signUpPasswordET.text.toString()
-            val repeatPassword = signUpRepeatPasswordET.text.toString()
+            val confirmPassword = signUpRepeatPasswordET.text.toString()
 
 
-            if (password != repeatPassword) {
+
+            if (password != confirmPassword) {
                 Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }
+            } else {
 
-//            if (!validatePassword(password)){
-//                val errorMessage = "Password must be at least 6 characters and contain one lowercase, uppercase and digit."
-//                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
-//                return@setOnClickListener
-//            }
+                if (validateEmail(email) && validatePassword(password)) {
+
+                    val user = User(email, password, confirmPassword)
+
+                    lifecycleScope.launch {
+                        val response = apiManager.signUp(user)
+
+                        if (response.status == HttpStatusCode.Created) {
+                            // Navigate to Sign In activity
+                            startActivity(Intent(this@SignUpActivity, SignInActivity::class.java))
+                            finish()  // Close SignUpActivity
+                        } else {
+
+                            val errorMessage = when (response.status) {
+                                HttpStatusCode.BadRequest -> "Invalid signup data!"  // Assuming 400 for validation errors
+                                HttpStatusCode.Conflict -> "User with this email already exists!"  // Assuming 409 for duplicate email
 
 
-            if (validateEmail(email) && validatePassword(password)){
-                startActivity(Intent(this, SignInActivity::class.java))
+                                else -> "Signup failed: ${response.status}"
+                            }
 
-            } else{
-                if (!validateEmail(email)) {
-                    val errorMessage = "Provide a valid email"
-                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
-                    return@setOnClickListener
-                } else if (!validatePassword(password)){
-                    val errorMessage = "Password must be at least 6 characters and contain one lowercase, uppercase and digit."
-                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
-                    return@setOnClickListener
+                            Toast.makeText(this@SignUpActivity, errorMessage, Toast.LENGTH_LONG)
+                                .show()
+
+
+                            println(response.status)
+                        }
+                    }
+                } else {
+                    if (!validateEmail(email)) {
+                        val errorMessage = "Provide a valid email"
+                        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+                        return@setOnClickListener
+                    } else if (!validatePassword(password)) {
+                        val errorMessage =
+                            "Password must be at least 6 characters and contain one lowercase, uppercase and digit."
+                        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+                        return@setOnClickListener
+                    }
                 }
 
-            }
 
+            }
 
 
         }
@@ -134,16 +128,11 @@ class SignUpActivity : AppCompatActivity() {
 
 
     private fun init() {
-
         signUpEmailEt = findViewById(R.id.signUpEmailET)
         signUpPasswordET = findViewById(R.id.signUpPasswordET)
         signUpRepeatPasswordET = findViewById(R.id.signUpRepeatPasswordET)
         signUpBTN = findViewById(R.id.signUpBTN)
         signUpAlreadyHaveAnAccountBTN = findViewById(R.id.signUpAlreadyHaveAnAccountBTN)
         signUpAgreeCheckBox = findViewById(R.id.signUpAgreeCheckBox)
-
-
     }
-
-
 }
