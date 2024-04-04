@@ -1,8 +1,6 @@
 package com.example.todoapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.http.HttpException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -11,8 +9,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import io.ktor.http.HttpStatusCode
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 

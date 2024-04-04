@@ -3,23 +3,15 @@ package com.example.todoapp
 import android.content.Context
 import android.util.Log
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.plugins.cookies.HttpCookies
 import io.ktor.client.plugins.cookies.cookies
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import io.ktor.client.call.*
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.http.*
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.utils.io.errors.IOException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
