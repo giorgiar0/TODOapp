@@ -8,7 +8,9 @@ import io.ktor.client.plugins.cookies.cookies
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -23,6 +25,11 @@ class KtorApiManager(private val context: Context) {
         install(ContentNegotiation) {
             json()
         }
+        install(Logging)
+        install(HttpTimeout){
+            requestTimeoutMillis = 10000
+        }
+
     }
 
 
@@ -39,10 +46,10 @@ class KtorApiManager(private val context: Context) {
             setBody(user)
         }
 
-//        val response = client.post(url) {
-//            contentType(ContentType.Application.Json)
-//            setBody(Json.encodeToString(user))
-//        }
+/*        val response = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(Json.encodeToString(user))
+        }*/
 
         println(response.status)
 
@@ -51,7 +58,7 @@ class KtorApiManager(private val context: Context) {
         Log.d("KtorApiManager", "Signup response code: ${response.status}")
 
 
-//        val cookies = client.cookies("http://13.41.23.50/")
+        val cookies = client.cookies("http://13.41.23.50/")
 
 
         return response
@@ -62,10 +69,10 @@ class KtorApiManager(private val context: Context) {
     }
 
 
-    suspend fun signIn(email: String, password: String, rememberMe: Boolean): HttpResponse {
+    suspend fun signIn(credentials: SignInActivity.Credentials): HttpResponse {
         val url = "http://13.41.23.50/api/sign-in"
 
-        data class Credentials(val email: String, val password: String, val rememberMe: Boolean)
+/*        data class Credentials(val email: String, val password: String, val rememberMe: Boolean)
 
         val credentials = Credentials(email, password, rememberMe)
 
@@ -73,6 +80,11 @@ class KtorApiManager(private val context: Context) {
         val response = client.post(url) {
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(credentials))
+        }*/
+
+        val response: HttpResponse = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(credentials)
         }
 
         val cookies = client.cookies("http://13.41.23.50/")
@@ -85,22 +97,22 @@ class KtorApiManager(private val context: Context) {
     }
 
 
-//    suspend fun callAPI(url: String): String?{
-//
-//        try {
-//            val response = ktorClient.get(url)
-//            if (response.status.value == 200){
-////                return response.text
-//                return response.toString()
-//            } else {
-//                Log.e("API", "ERROR: ${response.status.value}")
-//                return null
-//            }
-//        } catch (e: Exception){
-//            Log.e("API", "Error calling API: $e")
-//            return null
-//        }
-//    }
+/*    suspend fun callAPI(url: String): String?{
+
+        try {
+            val response = ktorClient.get(url)
+            if (response.status.value == 200){
+//                return response.text
+                return response.toString()
+            } else {
+                Log.e("API", "ERROR: ${response.status.value}")
+                return null
+            }
+        } catch (e: Exception){
+            Log.e("API", "Error calling API: $e")
+            return null
+        }
+    }*/
 
 
 }

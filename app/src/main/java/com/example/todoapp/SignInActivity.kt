@@ -7,10 +7,13 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 
 class SignInActivity : AppCompatActivity() {
@@ -34,6 +37,8 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
+    @Serializable
+    data class Credentials(val email: String, val password: String, val rememberMe: Boolean)
 
     private fun listeners() {
 
@@ -49,30 +54,58 @@ class SignInActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
 
                 return@setOnClickListener
-            }
+            } else {
+                val credentials = SignInActivity.Credentials(email, password, rememberMe)
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = try {
-                    apiManager.signIn(email, password, rememberMe)
-                } catch (e: Exception){
-                    runOnUiThread{
-                        Toast.makeText(this@SignInActivity, "Sign in failed!", Toast.LENGTH_SHORT).show()
-                    }
-                    return@launch
-                }
+                lifecycleScope.launch {
+                    val response = apiManager.signIn(credentials)
 
-                if (response.status.isSuccess()){
-                    runOnUiThread{
-                        Toast.makeText(this@SignInActivity,"Sign in successful!", Toast.LENGTH_SHORT).show()
+                    if (response.status == HttpStatusCode.Created) {
+                        // Navigate to Home activity
                         startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-                    }
-                } else{
-                    val errorMessage = response.status.value
-                    runOnUiThread{
-                        Toast.makeText(this@SignInActivity,errorMessage, Toast.LENGTH_SHORT).show()
+                        finish()  // Close SignInActivity
+                    } else {
+
+                        val errorMessage = when (response.status) {
+                            HttpStatusCode.BadRequest -> "Invalid signin data!"  // Assuming 400 for validation errors
+                            HttpStatusCode.Conflict -> "User with this email already exists!"  // Assuming 409 for duplicate email
+
+
+                            else -> "Signin failed: ${response.status}"
+                        }
+
+                        Toast.makeText(this@SignInActivity, errorMessage, Toast.LENGTH_LONG)
+                            .show()
+
+
+                        println(response.status)
                     }
                 }
             }
+
+
+            /*            CoroutineScope(Dispatchers.IO).launch {
+                            val response = try {
+                                apiManager.signIn(email, password, rememberMe)
+                            } catch (e: Exception){
+                                runOnUiThread{
+                                    Toast.makeText(this@SignInActivity, "Sign in failed!", Toast.LENGTH_SHORT).show()
+                                }
+                                return@launch
+                            }
+
+                            if (response.status.isSuccess()){
+                                runOnUiThread{
+                                    Toast.makeText(this@SignInActivity,"Sign in successful!", Toast.LENGTH_SHORT).show()
+                                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+                                }
+                            } else{
+                                val errorMessage = response.status.value
+                                runOnUiThread{
+                                    Toast.makeText(this@SignInActivity,errorMessage, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }*/
         }
 
 
