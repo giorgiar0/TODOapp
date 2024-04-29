@@ -13,9 +13,8 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 
 class KtorApiManager(private val context: Context) {
@@ -33,6 +32,8 @@ class KtorApiManager(private val context: Context) {
     }
 
 
+
+
     suspend fun signUp(user: SignUpActivity.User): HttpResponse {
         val url = "http://13.41.23.50/api/sign-up/start"
 
@@ -46,12 +47,14 @@ class KtorApiManager(private val context: Context) {
             setBody(user)
         }
 
-/*        val response = client.post(url) {
-            contentType(ContentType.Application.Json)
-            setBody(Json.encodeToString(user))
-        }*/
 
         println(response.status)
+        println(HttpStatusCode.Created)
+        println(HttpStatusCode.OK)
+
+
+
+        client.close()
 
 
 

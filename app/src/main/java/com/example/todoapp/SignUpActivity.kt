@@ -35,9 +35,11 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun validatePassword(password: String): Boolean {
-        if (password.length < 6 || !password.matches("[a-zA-Z0-9]+".toRegex()) || !password.contains(
-                Regex("[a-z]")
-            ) || !password.contains(Regex("[A-Z]")) || !password.contains(Regex("[0-9]"))
+        if (password.length < 6 ||
+            !password.matches("[a-zA-Z0-9!@#$%^&*()_+{}|:<>?]+".toRegex()) ||
+            !password.contains(Regex("[a-z]")) ||
+            !password.contains(Regex("[A-Z]")) ||
+            !password.contains(Regex("[0-9]"))
         ) {
             return false
         }
@@ -75,7 +77,7 @@ class SignUpActivity : AppCompatActivity() {
                     lifecycleScope.launch {
                         val response = apiManager.signUp(user)
 
-                        if (response.status == HttpStatusCode.Created) {
+                        if (response.status == HttpStatusCode.OK) {
                             // Navigate to Sign In activity
                             startActivity(Intent(this@SignUpActivity, SignInActivity::class.java))
                             finish()  // Close SignUpActivity

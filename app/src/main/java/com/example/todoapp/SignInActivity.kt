@@ -1,17 +1,14 @@
 package com.example.todoapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.isSuccess
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
@@ -57,10 +54,14 @@ class SignInActivity : AppCompatActivity() {
             } else {
                 val credentials = SignInActivity.Credentials(email, password, rememberMe)
 
+                //Temporary sign in
+                startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+
+
                 lifecycleScope.launch {
                     val response = apiManager.signIn(credentials)
 
-                    if (response.status == HttpStatusCode.Created) {
+                    if (response.status == HttpStatusCode.OK) {
                         // Navigate to Home activity
                         startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
                         finish()  // Close SignInActivity
@@ -68,14 +69,12 @@ class SignInActivity : AppCompatActivity() {
 
                         val errorMessage = when (response.status) {
                             HttpStatusCode.BadRequest -> "Invalid signin data!"  // Assuming 400 for validation errors
-                            HttpStatusCode.Conflict -> "User with this email already exists!"  // Assuming 409 for duplicate email
 
 
                             else -> "Signin failed: ${response.status}"
                         }
 
-                        Toast.makeText(this@SignInActivity, errorMessage, Toast.LENGTH_LONG)
-                            .show()
+                        Toast.makeText(this@SignInActivity, errorMessage, Toast.LENGTH_LONG).show()
 
 
                         println(response.status)
