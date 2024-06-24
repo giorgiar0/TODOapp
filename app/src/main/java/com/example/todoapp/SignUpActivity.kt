@@ -1,12 +1,12 @@
 package com.example.todoapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.launch
@@ -131,6 +131,6 @@ class SignUpActivity : AppCompatActivity() {
         signUpRepeatPasswordET = findViewById(R.id.signUpRepeatPasswordET)
         signUpBTN = findViewById(R.id.signUpBTN)
         signUpAlreadyHaveAnAccountBTN = findViewById(R.id.signUpAlreadyHaveAnAccountBTN)
-        signUpAgreeCheckBox = findViewById(R.id.signUpAgreeCheckBox)
+//        signUpAgreeCheckBox = findViewById(R.id.signUpAgreeCheckBox)
     }
 }

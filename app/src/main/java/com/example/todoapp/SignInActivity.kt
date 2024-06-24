@@ -7,9 +7,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import io.ktor.http.HttpStatusCode
-import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 
@@ -58,28 +55,28 @@ class SignInActivity : AppCompatActivity() {
                 startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
 
 
-                lifecycleScope.launch {
-                    val response = apiManager.signIn(credentials)
-
-                    if (response.status == HttpStatusCode.OK) {
-                        // Navigate to Home activity
-                        startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-                        finish()  // Close SignInActivity
-                    } else {
-
-                        val errorMessage = when (response.status) {
-                            HttpStatusCode.BadRequest -> "Invalid signin data!"  // Assuming 400 for validation errors
-
-
-                            else -> "Signin failed: ${response.status}"
-                        }
-
-                        Toast.makeText(this@SignInActivity, errorMessage, Toast.LENGTH_LONG).show()
-
-
-                        println(response.status)
-                    }
-                }
+//                lifecycleScope.launch {
+//                    val response = apiManager.signIn(credentials)
+//
+//                    if (response.status == HttpStatusCode.OK) {
+//                        // Navigate to Home activity
+//                        startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+//                        finish()  // Close SignInActivity
+//                    } else {
+//
+//                        val errorMessage = when (response.status) {
+//                            HttpStatusCode.BadRequest -> "Invalid signin data!"  // Assuming 400 for validation errors
+//
+//
+//                            else -> "Signin failed: ${response.status}"
+//                        }
+//
+//                        Toast.makeText(this@SignInActivity, errorMessage, Toast.LENGTH_LONG).show()
+//
+//
+//                        println(response.status)
+//                    }
+//                }
             }
 
 

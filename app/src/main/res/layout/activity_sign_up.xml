@@ -49,14 +49,14 @@
         android:orientation="horizontal">
 
 
-        <androidx.appcompat.widget.AppCompatCheckBox
+<!--        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/signUpAgreeCheckBox"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="@string/agree"
             android:textSize="16sp"
-            android:theme="@style/coloredCheckbox" />
+            android:theme="@style/coloredCheckbox" />-->
 
     </LinearLayout>
 

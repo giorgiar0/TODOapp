@@ -3,18 +3,19 @@ package com.example.todoapp
 import android.content.Context
 import android.util.Log
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.cookies.HttpCookies
-import io.ktor.client.plugins.cookies.cookies
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.cookies.HttpCookies
+import io.ktor.client.plugins.cookies.cookies
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
 
 
 class KtorApiManager(private val context: Context) {
@@ -98,6 +99,35 @@ class KtorApiManager(private val context: Context) {
         return response
 
     }
+
+
+/*    suspend fun getTasks():List<Task> {
+        val url = "http://13.41.23.50/api/todos"
+
+//        val response: HttpResponse = client.get(url)
+
+        return try {
+            val response: HttpResponse = client.get(url)
+
+            if (response.status == HttpStatusCode.OK) {
+                response.body()
+            } else {
+                val responseBody = response.body<String>()
+                Log.e("KtorApiManager", "Error fetching tasks: ${response.status} - $responseBody")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            Log.e("KtorApiManager", "Exception fetching tasks", e)
+            emptyList()
+        }
+
+
+//        return if (response.status == HttpStatusCode.OK) {
+//
+//            response.body()
+//        } else
+//            emptyList()
+    }*/
 
 
 /*    suspend fun callAPI(url: String): String?{

@@ -21,7 +21,23 @@
     <string name="homePage">Home Page</string>
 
     <string name="SignOut">Sign Out</string>
+    <string name="add_task">add task</string>
 
+
+    <string-array name="priority_array">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+        <item>Critical</item>
+    </string-array>
+
+    <string-array name="status_array">
+        <item>Todo</item>
+        <item>Blocked</item>
+        <item>Active</item>
+        <item>Cancelled</item>
+        <item>Done</item>
+    </string-array>
 
 
 </resources>
