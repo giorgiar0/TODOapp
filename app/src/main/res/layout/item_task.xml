@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:text="Priority"
 
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
 
         <TextView
