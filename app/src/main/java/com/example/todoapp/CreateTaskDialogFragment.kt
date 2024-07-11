@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.todoapp.model.Task
 import java.util.Calendar
+import java.util.UUID
 
 class CreateTaskDialogFragment(private val task: Task? = null) : DialogFragment() {
 
@@ -107,14 +108,14 @@ class CreateTaskDialogFragment(private val task: Task? = null) : DialogFragment(
 
         val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialogStyle)
             .setView(dialogView)
-            .setTitle("Add New Task")
-            .setPositiveButton("Add") { _, _ ->
+            .setTitle(if (task == null) "Add New Task" else "Edit Task")
+            .setPositiveButton(if (task == null) "Add" else "Update") { _, _ ->
                 val taskName = taskNameEditText.text.toString()
                 val taskDescription = taskDescriptionEditText.text.toString()
                 val priority = prioritySpinner.selectedItem.toString()
                 val status = statusSpinner.selectedItem.toString()
                 val task = Task(
-                    id = null,
+                    id = task?.id ?: UUID.randomUUID().toString(),
                     title = taskName,
                     description = taskDescription,
                     priority = priority,

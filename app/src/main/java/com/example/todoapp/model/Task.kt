@@ -1,10 +1,13 @@
 package com.example.todoapp.model
 
+import java.util.UUID
+
 data class Task (
-    val id: Int? = null,
-    val title: String,
-    val description: String,
-    val priority: String,
-    val status: String,
-    val `when`: String
+//    var id: Int? = null,
+    val id: String = UUID.randomUUID().toString(),
+    var title: String,
+    var description: String,
+    var priority: String,
+    var status: String,
+    var `when`: String
 )

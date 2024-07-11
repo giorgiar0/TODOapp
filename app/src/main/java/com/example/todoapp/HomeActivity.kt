@@ -2,7 +2,6 @@ package com.example.todoapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -82,14 +81,27 @@ class HomeActivity : AppCompatActivity(), CreateTaskDialogFragment.OnTaskCreated
     override fun onTaskCreated(task: Task) {
 
 
-        val currentFragment = supportFragmentManager.findFragmentByTag("f${topViewPager.currentItem}") as? TaskSectionsFragment
-        currentFragment?.addTaskToCorrectFragment(task)
+        if (task.id == null) {
+//            task.id = UUID.randomUUID().toString()
+            taskViewModel.addTask(task)
+        } else {
+            taskViewModel.updateTask(task)
+        }
+        refreshTaskFragments()
 
-        Log.d("HomeActivity", "Task added: $task")
+//        Log.d("HomeActivity", "Task added: $task")
 
 
 
 
+    }
+
+
+    private fun refreshTaskFragments() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        if (fragment is TaskSectionsFragment) {
+            fragment.updateTaskList(taskViewModel.tasks.value ?: emptyList())
+        }
     }
 
     class TopLevelPagerAdapter(activiy: FragmentActivity) : FragmentStateAdapter(activiy) {

@@ -35,6 +35,17 @@ class TaskSectionsFragment : Fragment() {
         return view
     }
 
+    fun updateTaskList(tasks: List<Task>) {
+        for (fragment in childFragmentManager.fragments) {
+            when (fragment) {
+                is ToDoFragment -> fragment.updateTasks(tasks.filter { it.status.equals("todo", ignoreCase = true) })
+                is BlockedFragment -> fragment.updateTasks(tasks.filter { it.status.equals("blocked", ignoreCase = true) })
+                is ActiveFragment -> fragment.updateTasks(tasks.filter { it.status.equals("active", ignoreCase = true) })
+                is CancelledFragment -> fragment.updateTasks(tasks.filter { it.status.equals("cancelled", ignoreCase = true) })
+                is DoneFragment -> fragment.updateTasks(tasks.filter { it.status.equals("done", ignoreCase = true) })
+            }
+        }
+    }
 
 
     fun addTaskToCorrectFragment(task: Task) {
@@ -46,7 +57,11 @@ class TaskSectionsFragment : Fragment() {
 
         private val fragmentTitles = listOf("ToDo", "Blocked", "Active", "Cancelled", "Done")
 
-        override fun getItemCount(): Int = fragmentTitles.size
+        override fun getItemCount(): Int {
+            return fragmentTitles.size
+        }
+
+//        override fun getItemCount(): Int = fragmentTitles.size
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
@@ -59,7 +74,10 @@ class TaskSectionsFragment : Fragment() {
             }
         }
 
-        fun getPageTitle(position: Int): CharSequence? = fragmentTitles[position]
+
+        fun getPageTitle(position: Int): CharSequence? {
+            return fragmentTitles[position]
+        }
 
     }
 
