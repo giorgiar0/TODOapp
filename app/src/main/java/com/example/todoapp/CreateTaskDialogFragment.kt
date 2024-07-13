@@ -21,6 +21,8 @@ class CreateTaskDialogFragment(private val task: Task? = null) : DialogFragment(
 
     interface OnTaskCreatedListener {
         fun onTaskCreated(task: Task)
+        fun onTaskDeleted(task: Task)
+
     }
 
 
@@ -126,12 +128,27 @@ class CreateTaskDialogFragment(private val task: Task? = null) : DialogFragment(
             }
             .setNegativeButton("Cancel", null)
 
+
+        if (task != null) {
+            dialogBuilder.setNeutralButton("Delete") { _, _ ->
+                listener.onTaskDeleted(task)
+            }
+        }
+
         val alertDialog = dialogBuilder.create()
         alertDialog.setOnShowListener {
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                ?.setTextColor(ContextCompat.getColor(requireContext(), R.color.sangu_color))
-            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-                ?.setTextColor(ContextCompat.getColor(requireContext(), R.color.sangu_color))
+
+            val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+
+            positiveButton?.apply {
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.sangu_color))
+            }
+            negativeButton?.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+            neutralButton?.apply {
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.sangu_color))
+            }
         }
 
 

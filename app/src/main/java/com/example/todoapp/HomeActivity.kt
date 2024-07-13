@@ -81,7 +81,7 @@ class HomeActivity : AppCompatActivity(), CreateTaskDialogFragment.OnTaskCreated
     override fun onTaskCreated(task: Task) {
 
 
-        if (task.id == null) {
+        if (task.id.isEmpty()) {
 //            task.id = UUID.randomUUID().toString()
             taskViewModel.addTask(task)
         } else {
@@ -94,6 +94,11 @@ class HomeActivity : AppCompatActivity(), CreateTaskDialogFragment.OnTaskCreated
 
 
 
+    }
+
+    override fun onTaskDeleted(task: Task) {
+        taskViewModel.deleteTask(task)
+        refreshTaskFragments()
     }
 
 
